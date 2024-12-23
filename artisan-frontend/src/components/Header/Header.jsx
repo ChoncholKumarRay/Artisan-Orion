@@ -14,7 +14,7 @@ const Header = () => {
       <div className="logo-title">
         <img src={logoIcon} alt="" className="logo" />
         <Link to="/" className="site-title">
-          Artisan Optics
+          Artisan Orion
         </Link>
       </div>
       <div
