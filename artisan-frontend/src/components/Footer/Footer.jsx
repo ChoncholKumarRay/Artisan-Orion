@@ -8,7 +8,7 @@ const Footer = () => {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-section about">
-            <h2>About the App</h2>
+            <h2>About</h2>
             <p>
               Artisan Orion is a Bangladesh based telescope selling website. Buy
               your desired telescope from us and be a star hunter.
@@ -19,7 +19,7 @@ const Footer = () => {
             <div className="social-icon">
               <div>
                 <a
-                  href="https://www.facebook.com/camsust"
+                  href="https://www.facebook.com/chonchol.sust"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -28,7 +28,7 @@ const Footer = () => {
               </div>
               <div>
                 <a
-                  href="https://www.youtube.com/@cam-sust7650"
+                  href="https://youtube.com/@choncholkumarray"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -37,7 +37,7 @@ const Footer = () => {
               </div>
               <div>
                 <a
-                  href="https://x.com/camsust"
+                  href="https://x.com/chonchol_k_ray"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
