@@ -22,7 +22,9 @@ const Gallery = () => {
     const fetchProducts = async () => {
       try {
         // Replace with your backend API endpoint
-        const response = await fetch("http://localhost:5000/api/products");
+        const response = await fetch(
+          "https://artisan-orion.onrender.com/api/products"
+        );
         const data = await response.json();
 
         // Set fetched data to state
