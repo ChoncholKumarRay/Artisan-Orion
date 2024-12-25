@@ -6,14 +6,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const productRoutes = require("./routes/productRoutes");
+const userRoutes = require("./routes/userRoutes"); // Import the user routes
 
 const app = express();
 
-
-require('dotenv').config();
 console.log("MongoDB URL:", process.env.MONGO_URL);
 console.log("Server Port:", process.env.PORT);
-
 
 // Middleware
 app.use(cors());
@@ -27,6 +25,7 @@ mongoose
 
 // Routes
 app.use("/api/products", productRoutes);
+app.use("/api", userRoutes); // Use user routes for registration
 
 // Start server
 const PORT = process.env.PORT || 5000;
