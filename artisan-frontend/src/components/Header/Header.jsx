@@ -35,7 +35,7 @@ const Header = () => {
           <NavLink to="/about">Cart</NavLink>
         </li>
         <li onClick={handleMenuClick}>
-          <NavLink to="/cam">Profile</NavLink>
+          <NavLink to="/register">Profile</NavLink>
         </li>
       </ul>
     </nav>
