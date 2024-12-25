@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "./styles/RegisterPage.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevState) => !prevState);
@@ -32,6 +35,7 @@ const Register = () => {
         // Reset form fields
         setUsername("");
         setPassword("");
+        navigate("/login");
       } else {
         alert(`Registration failed: ${data.message}`);
       }
