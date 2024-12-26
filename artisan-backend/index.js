@@ -15,7 +15,7 @@ console.log("Server Port:", process.env.PORT);
 
 // Middleware
 app.use(cors({
-  origin: "https://artisan-orion.vercel.app", // Ensure frontend can access this
+  origin: ["https://artisan-orion.vercel.app", "http://localhost:5173"], // Allow multiple origins
   methods: "GET,POST", // Allow POST and GET requests
   allowedHeaders: "Content-Type,Authorization", // Allow specific headers
 }));
