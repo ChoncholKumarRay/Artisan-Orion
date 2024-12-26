@@ -33,13 +33,10 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Successful login, check bank account and secret key
+        localStorage.setItem("artisan", username);
+        console.log(localStorage.getItem("artisan"));
+
         navigate(data.redirectTo);
-        // if (data.bank_account === "" && data.secret_key === "") {
-        //   navigate("/setbankinfo"); // Navigate to set bank info page
-        // } else {
-        //   navigate("/"); // Navigate to home page
-        // }
       } else {
         // If login failed (wrong password or other issues)
         setErrorMessage(data.message); // Set error message to display
