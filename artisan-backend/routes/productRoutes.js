@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:productId", async (req, res) => {
   try {
     const productId = req.params.productId; // Extract product_id from the URL
-    const product = await Product.findOne({ _id: productId }, "name price image_url"); // Find product by product_id and exclude _id
+    const product = await Product.findOne({ _id: productId }, "name description price image_url brand"); // Find product by product_id and exclude _id
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
