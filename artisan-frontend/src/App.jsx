@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import BankInfoPage from "./pages/BankInfoPage";
 import ProfilePage from "./pages/ProfilePage";
+import ProductPage from "./pages/ProductPage";
 
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/set-bank-info" element={<BankInfoPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/products" element={<ProductPage />} />
       </Routes>
     </div>
   );
