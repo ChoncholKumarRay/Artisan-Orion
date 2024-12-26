@@ -1,14 +1,26 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logoIcon from "../../assets/artisan-logo.png";
 import "./Header.css";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if the user is logged in by checking the localStorage
+  useEffect(() => {
+    const artisan = localStorage.getItem("artisan");
+    if (artisan) {
+      setIsLoggedIn(true); // If artisan is present, set logged-in state to true
+    } else {
+      setIsLoggedIn(false); // If artisan is not present, set logged-in state to false
+    }
+  }, []);
+
   const handleMenuClick = () => {
     setMenuOpen(false);
   };
+
   return (
     <nav>
       <div className="logo-title">
@@ -34,9 +46,17 @@ const Header = () => {
         <li onClick={handleMenuClick}>
           <NavLink to="/about">Cart</NavLink>
         </li>
-        <li onClick={handleMenuClick}>
-          <NavLink to="/register">Profile</NavLink>
-        </li>
+
+        {/* Conditionally render Profile or Login link based on login state */}
+        {isLoggedIn ? (
+          <li onClick={handleMenuClick}>
+            <NavLink to="/profile">Profile</NavLink>
+          </li>
+        ) : (
+          <li onClick={handleMenuClick}>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+        )}
       </ul>
     </nav>
   );
