@@ -5,7 +5,7 @@ const Product = require("../models/Product");
 // GET all products
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find({}, "product_id name price image_url"); // Select only required fields
+    const products = await Product.find({}, "name price image_url"); // Select only required fields
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ message: "Error fetching products", error });
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
 router.get("/:productId", async (req, res) => {
   try {
     const productId = req.params.productId; // Extract product_id from the URL
-    const product = await Product.findOne({ _id: productId }, "product_id name price image_url"); // Find product by product_id and exclude _id
+    const product = await Product.findOne({ _id: productId }, "name price image_url"); // Find product by product_id and exclude _id
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });

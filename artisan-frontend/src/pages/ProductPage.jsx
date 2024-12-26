@@ -12,7 +12,7 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/${productId}`
+          `https://artisan-orion.onrender.com/api/products/${productId}`
         );
         const data = await response.json();
         setProduct(data);
