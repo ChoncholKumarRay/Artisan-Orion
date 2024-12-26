@@ -99,6 +99,31 @@
   ); /* Reverse hover effect */
 }
 
+.register-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  color: whitesmoke;
+}
+
+.link-button {
+  background: transparent;
+  border: none;
+  color: #4caf50;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link-button:hover {
+  text-decoration: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
 /* Background setup 
 .register-page {
     height: 100vh;

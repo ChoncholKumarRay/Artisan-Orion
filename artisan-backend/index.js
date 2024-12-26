@@ -14,7 +14,11 @@ console.log("MongoDB URL:", process.env.MONGO_URL);
 console.log("Server Port:", process.env.PORT);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173", // Ensure frontend can access this
+  methods: "GET,POST", // Allow POST and GET requests
+  allowedHeaders: "Content-Type,Authorization", // Allow specific headers
+}));
 app.use(express.json());
 
 // Connect to MongoDB
@@ -25,7 +29,7 @@ mongoose
 
 // Routes
 app.use("/api/products", productRoutes);
-app.use("/api", userRoutes); // Use user routes for registration
+app.use("/api", userRoutes); // Use user routes for registration and login
 
 // Start server
 const PORT = process.env.PORT || 5001;

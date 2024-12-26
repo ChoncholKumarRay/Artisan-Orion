@@ -79,6 +79,16 @@ const Register = () => {
         <button type="submit" className="register-button">
           Register
         </button>
+        <div className="register-link">
+          <span>Already have an account? </span>
+          <button
+            type="button"
+            className="link-button"
+            onClick={() => navigate("/login")} // Navigate to register page
+          >
+            Login
+          </button>
+        </div>
       </form>
     </div>
   );
