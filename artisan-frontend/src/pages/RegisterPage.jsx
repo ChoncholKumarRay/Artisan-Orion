@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./styles/RegisterPage.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -46,50 +48,54 @@ const Register = () => {
   };
 
   return (
-    <div className="register-page">
-      <form className="register-form" onSubmit={handleSubmit}>
-        <h2 className="form-title">Sign Up</h2>
-        <div className="form-username">
-          <input
-            type="text"
-            placeholder="Username"
-            className="form-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="password-field">
-          <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Password"
-            className="form-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            className="toggle-password"
-            onClick={togglePasswordVisibility}
-          >
-            {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+    <div>
+      <Header />
+      <div className="register-page">
+        <form className="register-form" onSubmit={handleSubmit}>
+          <h2 className="form-title">Sign Up</h2>
+          <div className="form-username">
+            <input
+              type="text"
+              placeholder="Username"
+              className="form-input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div className="password-field">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Password"
+              className="form-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={togglePasswordVisibility}
+            >
+              {passwordVisible ? <FaEye /> : <FaEyeSlash />}
+            </button>
+          </div>
+          <button type="submit" className="register-button">
+            Register
           </button>
-        </div>
-        <button type="submit" className="register-button">
-          Register
-        </button>
-        <div className="register-link">
-          <span>Already have an account? </span>
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => navigate("/login")} // Navigate to register page
-          >
-            Login
-          </button>
-        </div>
-      </form>
+          <div className="register-link">
+            <span>Already have an account? </span>
+            <button
+              type="button"
+              className="link-button"
+              onClick={() => navigate("/login")} // Navigate to register page
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+      <Footer />
     </div>
   );
 };
