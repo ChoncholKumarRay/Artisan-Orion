@@ -1,0 +1,80 @@
+/* Background setup */
+.bank-info-page {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  font-family: "Arial", sans-serif;
+}
+
+/* Glassmorphic form styling */
+.bank-info-form {
+  background: rgba(30, 30, 30, 0.8); /* Darker glass effect */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7); /* Stronger shadow */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  width: 300px;
+  text-align: center;
+}
+
+/* Form title */
+.form-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding-top: 2rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff; /* Bright text for contrast */
+}
+
+/* Input fields */
+.form-input {
+  width: 92%;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  background: rgba(50, 50, 50, 0.8); /* Darker input background */
+  color: #ffffff; /* Bright text for readability */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Input placeholder */
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Submit button */
+.submit-button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(135deg, #4ca1af, #2c3e50); /* Sleek dark button */
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.submit-button:hover {
+  background: linear-gradient(
+    135deg,
+    #2c3e50,
+    #4ca1af
+  ); /* Reverse hover effect */
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}

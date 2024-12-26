@@ -61,4 +61,28 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+router.post("/update-bank-info", async (req, res) => {
+  const { username, bank_account, secret_key } = req.body;
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.bank_account = bank_account;
+    user.secret_key = secret_key;
+    await user.save();
+
+    res.status(200).json({ message: "Bank information updated successfully" });
+  } catch (error) {
+    console.error("Error updating bank information:", error);
+    res.status(500).json({ message: "Error updating bank information" });
+  }
+});
+
+
+
 module.exports = router;

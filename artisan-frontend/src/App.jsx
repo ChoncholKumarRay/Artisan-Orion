@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/setbankinfo" element={<BankInfoPage />} />
+        <Route path="/set-bank-info" element={<BankInfoPage />} />
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </div>
