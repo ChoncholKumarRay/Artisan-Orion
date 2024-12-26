@@ -53,7 +53,7 @@ const BankInfoPage = () => {
           <input
             type="text"
             placeholder="Bank Account Number"
-            className="form-input"
+            className="bank-form-input"
             value={bankAccount}
             onChange={(e) => setBankAccount(e.target.value)}
             required
@@ -61,7 +61,7 @@ const BankInfoPage = () => {
           <input
             type="text"
             placeholder="Secret Key"
-            className="form-input"
+            className="bank-form-input"
             value={secretKey}
             onChange={(e) => setSecretKey(e.target.value)}
             required

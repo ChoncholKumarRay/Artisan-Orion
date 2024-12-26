@@ -53,7 +53,7 @@ router.post("/login", async (req, res) => {
     if (bank_account && secret_key) {
       return res.json({ message: "Login successful", redirectTo: "/" }); // Home route
     } else {
-      return res.json({ message: "Login successful", redirectTo: "/setbankinfo" }); // Redirect to set bank info
+      return res.json({ message: "Login successful", redirectTo: "/set-bank-info" }); // Redirect to set bank info
     }
   } catch (error) {
     console.error("Error during login:", error);
