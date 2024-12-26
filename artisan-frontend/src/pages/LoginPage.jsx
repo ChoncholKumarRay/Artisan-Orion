@@ -20,7 +20,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/login", // Replace with your backend login API endpoint
+        "https://artisan-orion.onrender.com/api/login", // Replace with your backend login API endpoint
         {
           method: "POST",
           headers: {
