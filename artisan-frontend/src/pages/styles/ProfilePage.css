@@ -1,0 +1,67 @@
+/* ProfilePage.css */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  min-height: 400px;
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+.profile-title {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+.profile-icon {
+  font-size: 5rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.profile-username {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin: 10px 0;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.logout-button {
+  background: linear-gradient(135deg, #ff7eb3, #ff758c);
+  border: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin-top: 30px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button:hover {
+  background: linear-gradient(135deg, #ff5f91, #ff4365);
+}
+
+.logout-button:active {
+  transform: scale(0.98);
+}
