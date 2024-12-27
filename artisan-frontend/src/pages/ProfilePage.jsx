@@ -12,6 +12,7 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("artisan");
+    localStorage.removeItem("cart");
     navigate("/");
   };
 

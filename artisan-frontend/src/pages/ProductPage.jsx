@@ -44,10 +44,34 @@ const ProductPage = () => {
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () => setQuantity((prev) => Math.max(1, prev - 1)); // Prevent quantity below 1
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (buttonType) => {
     const artisan = localStorage.getItem("artisan");
     if (!artisan) {
       navigate("/login"); // Redirect to login if artisan is not set
+    } else {
+      // Retrieve cart from local storage, or initialize it if empty
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Check if product is already in the cart
+      const productIndex = cart.findIndex((item) => item.id === productId);
+
+      if (productIndex > -1) {
+        // Product already in cart, update the quantity
+        cart[productIndex].quantity = quantity;
+      } else {
+        // Product not in cart, add it with quantity
+        cart.push({ id: productId, quantity });
+      }
+
+      // Save the updated cart back to local storage
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // For now, you can handle the button logic here (e.g., for "Buy Now" or "Add to Cart")
+      // This can be further enhanced later for redirecting to the cart or checkout page
+      console.log("Cart updated:", cart);
+    }
+    if (buttonType == "add-to-cart") {
+      navigate("/");
     }
   };
 
@@ -92,13 +116,13 @@ const ProductPage = () => {
             <div className="product-page__action-buttons">
               <button
                 className="product-page__buy-now-button"
-                onClick={handleButtonClick} // Add onClick for "Buy Now"
+                onClick={() => handleButtonClick("buy-now")} // Add onClick for "Buy Now"
               >
                 Buy Now
               </button>
               <button
                 className="product-page__add-to-cart-button"
-                onClick={handleButtonClick} // Add onClick for "Add to Cart"
+                onClick={() => handleButtonClick("add-to-cart")} // Add onClick for "Add to Cart"
               >
                 Add to Cart
               </button>
