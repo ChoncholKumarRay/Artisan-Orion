@@ -60,7 +60,13 @@ const ProductPage = () => {
         cart[productIndex].quantity = quantity;
       } else {
         // Product not in cart, add it with quantity
-        cart.push({ id: productId, quantity });
+        cart.push({
+          id: productId,
+          name: product.name,
+          price: product.price,
+          image_url: product.image_url,
+          quantity,
+        });
       }
 
       // Save the updated cart back to local storage
@@ -69,9 +75,10 @@ const ProductPage = () => {
       // For now, you can handle the button logic here (e.g., for "Buy Now" or "Add to Cart")
       // This can be further enhanced later for redirecting to the cart or checkout page
       console.log("Cart updated:", cart);
-    }
-    if (buttonType == "add-to-cart") {
-      navigate("/");
+
+      if (buttonType == "add-to-cart") {
+        navigate("/");
+      }
     }
   };
 
