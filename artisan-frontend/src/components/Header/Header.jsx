@@ -44,7 +44,7 @@ const Header = () => {
           <NavLink to="/">Home</NavLink>
         </li>
         <li onClick={handleMenuClick}>
-          <NavLink to="/about">Cart</NavLink>
+          <NavLink to="/cart">Cart</NavLink>
         </li>
 
         {/* Conditionally render Profile or Login link based on login state */}

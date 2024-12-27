@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom"; // For accessing query params
+import { useNavigate, useSearchParams } from "react-router-dom"; // Added useNavigate
 import "./styles/ProductPage.css";
 import Header from "../components/Header/Header.jsx";
 import Footer from "../components/Footer/Footer.jsx";
@@ -13,6 +13,7 @@ const ProductPage = () => {
   const [searchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1); // State for quantity
+  const navigate = useNavigate(); // Navigation hook
 
   const productId = searchParams.get("id"); // Get the product ID from the URL
 
@@ -42,6 +43,13 @@ const ProductPage = () => {
 
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () => setQuantity((prev) => Math.max(1, prev - 1)); // Prevent quantity below 1
+
+  const handleButtonClick = () => {
+    const artisan = localStorage.getItem("artisan");
+    if (!artisan) {
+      navigate("/login"); // Redirect to login if artisan is not set
+    }
+  };
 
   if (!product) {
     return <p>Loading product details...</p>;
@@ -82,8 +90,16 @@ const ProductPage = () => {
               </div>
             </div>
             <div className="product-page__action-buttons">
-              <button className="product-page__buy-now-button">Buy Now</button>
-              <button className="product-page__add-to-cart-button">
+              <button
+                className="product-page__buy-now-button"
+                onClick={handleButtonClick} // Add onClick for "Buy Now"
+              >
+                Buy Now
+              </button>
+              <button
+                className="product-page__add-to-cart-button"
+                onClick={handleButtonClick} // Add onClick for "Add to Cart"
+              >
                 Add to Cart
               </button>
             </div>
