@@ -78,6 +78,8 @@ const ProductPage = () => {
 
       if (buttonType == "add-to-cart") {
         navigate("/");
+      } else if (buttonType == "buy-now") {
+        navigate("/cart");
       }
     }
   };

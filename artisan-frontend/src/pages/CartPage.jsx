@@ -11,6 +11,7 @@ import telescope3 from "../assets/telescope3.jpg";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
+  const [error, setError] = useState(""); // State for displaying error message
   const navigate = useNavigate();
 
   const imageMapping = {
@@ -31,11 +32,36 @@ const CartPage = () => {
   };
 
   const handleCheckout = () => {
-    if (cartItems.length === 0) {
-      alert("Your cart is empty. Add items before checking out.");
+    const phoneInput = document.querySelector(".cart-page__input").value.trim();
+    const addressInput = document
+      .querySelector(".cart-page__textarea")
+      .value.trim();
+
+    if (!phoneInput || !addressInput) {
+      setError(
+        !phoneInput && !addressInput
+          ? "Phone number and address are required."
+          : !phoneInput
+          ? "Phone number is required."
+          : "Address is required."
+      );
       return;
     }
-    navigate("/checkout"); // Navigate to the checkout page
+
+    if (cartItems.length === 0) {
+      setError("Your cart is empty. Add items before checking out.");
+      return;
+    }
+
+    setError(""); // Clear error if no issues
+    navigate("/checkout");
+  };
+
+  const calculateTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
   };
 
   return (
@@ -43,37 +69,79 @@ const CartPage = () => {
       <Header />
       <div className="cart-page">
         <h1 className="cart-page__title">Your Cart</h1>
-        {cartItems.length === 0 ? (
-          <p className="cart-page__empty">Your cart is empty!</p>
-        ) : (
-          <div className="cart-page__items">
-            {cartItems.map((item) => (
-              <div key={item.id} className="cart-page__item">
-                <img
-                  src={imageMapping[item.image_url]}
-                  alt={item.name}
-                  className="cart-page__item-image"
-                />
-                <div className="cart-page__item-details">
-                  <h2 className="cart-page__item-name">{item.name}</h2>
-                  <p className="cart-page__item-price">৳ {item.price}</p>
-                  <p className="cart-page__item-quantity">
-                    Quantity: {item.quantity}
-                  </p>
-                </div>
-                <button
-                  className="cart-page__remove-button"
-                  onClick={() => handleRemoveItem(item.id)}
-                >
-                  Remove
-                </button>
+        <div className="cart-page__content">
+          {/* Cart Items Section */}
+          <div className="cart-page__items-section">
+            {cartItems.length === 0 ? (
+              <p className="cart-page__empty">Your cart is empty!</p>
+            ) : (
+              <div className="cart-page__items">
+                {cartItems.map((item) => (
+                  <div key={item.id} className="cart-page__item">
+                    <img
+                      src={imageMapping[item.image_url]}
+                      alt={item.name}
+                      className="cart-page__item-image"
+                    />
+                    <div className="cart-page__item-details">
+                      <h2 className="cart-page__item-name">{item.name}</h2>
+
+                      <div className="cart-page__item-price">
+                        ৳ {item.price}
+                      </div>
+                      <div className="cart-page__item-quantity">
+                        Quantity: {item.quantity}
+                      </div>
+
+                      <div className="cart-page__item-subtotal">
+                        Subtotal: ৳ {item.price * item.quantity}
+                      </div>
+                    </div>
+                    <button
+                      className="cart-page__remove-button"
+                      onClick={() => handleRemoveItem(item.id)}
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
-        )}
-        <button className="cart-page__checkout-button" onClick={handleCheckout}>
-          Checkout
-        </button>
+
+          {/* Order Summary Section */}
+          <div className="cart-page__summary-section">
+            <h2 className="cart-page__summary-title">Order Summary</h2>
+            <div className="cart-page__summary-details">
+              <label className="cart-page__label">Phone Number:</label>
+              <input
+                type="text"
+                className="cart-page__input"
+                placeholder="Enter phone number"
+              />
+
+              <label className="cart-page__label">Address:</label>
+              <textarea
+                className="cart-page__textarea"
+                placeholder="Enter your address"
+              ></textarea>
+
+              <h3 className="cart-page__total">
+                Total Amount: ৳ {calculateTotal()}
+              </h3>
+            </div>
+
+            {/* Display error message */}
+            {error && <p className="cart-page__error">{error}</p>}
+
+            <button
+              className="cart-page__checkout-button"
+              onClick={handleCheckout}
+            >
+              Checkout
+            </button>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
