@@ -9,6 +9,7 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -39,11 +40,11 @@ const Register = () => {
         setPassword("");
         navigate("/login");
       } else {
-        alert(`Registration failed: ${data.message}`);
+        setErrorMessage(data.message);
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      alert("An error occurred. Please try again.");
+      setErrorMessage("An error occurred. Please try again.");
     }
   };
 
@@ -80,6 +81,7 @@ const Register = () => {
               {passwordVisible ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
           <button type="submit" className="register-button">
             Register
           </button>

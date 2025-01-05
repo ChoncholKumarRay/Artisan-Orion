@@ -31,7 +31,7 @@ const CartPage = () => {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     const phoneInput = document.querySelector(".cart-page__input").value.trim();
     const addressInput = document
       .querySelector(".cart-page__textarea")
@@ -53,8 +53,45 @@ const CartPage = () => {
       return;
     }
 
-    setError(""); // Clear error if no issues
-    navigate("/checkout");
+    setError("");
+
+    // Prepare order data
+    const orderData = {
+      username: localStorage.getItem("artisan"), // Replace with actual username
+      phone: phoneInput,
+      address: addressInput,
+      ordered_products: cartItems.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price, // Ensure price is sent as well for total calculation in backend
+      })),
+    };
+
+    console.log(orderData);
+
+    // Call API to create order
+    try {
+      const response = await fetch("http://localhost:5000/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const data = await response.json();
+      const id = data.order_id;
+      if (response.ok) {
+        // Redirect to checkout page with order ID
+        // navigate(`/checkout/id?=${data.order_id}`);
+        navigate(`/checkout?id=${id}`);
+      } else {
+        setError(data.message || "Something went wrong.");
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+      setError("Failed to place the order.");
+    }
   };
 
   const calculateTotal = () => {

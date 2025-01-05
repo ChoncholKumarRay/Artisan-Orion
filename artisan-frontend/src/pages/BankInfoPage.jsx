@@ -17,7 +17,7 @@ const BankInfoPage = () => {
 
     try {
       const response = await fetch(
-        "https://artisan-orion.onrender.com/api/update-bank-info", // Replace with your backend endpoint
+        "https://artisan-orion.onrender.com/api/update-bank-info",
         {
           method: "POST",
           headers: {
