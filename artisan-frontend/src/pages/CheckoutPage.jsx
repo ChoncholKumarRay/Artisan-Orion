@@ -1,54 +1,71 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 import "./styles/CheckoutPage.css";
+import blueIcon from "../assets/blue_check.png";
 
-const CheckoutPage = () => {
-  const { order_id } = useParams(); // Access the order ID from the URL
-  const [order, setOrder] = useState(null);
+const Checkout = () => {
+  const [bankAccount, setBankAccount] = useState("");
+  const [secretKey, setSecretKey] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const orderId = searchParams.get("id");
 
-  useEffect(() => {
-    // Fetch order details using the order_id from the backend (e.g., via an API)
-    // This is just an example; you'll need to replace it with your actual API call
-    const fetchOrderDetails = async () => {
-      try {
-        const response = await fetch(`/api/orders/${order_id}`);
-        const data = await response.json();
-        setOrder(data);
-      } catch (error) {
-        console.error("Error fetching order details:", error);
-      }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    if (order_id) {
-      fetchOrderDetails();
+    // Validate bank account and secret key (simple example)
+    if (!bankAccount || !secretKey) {
+      setErrorMessage("Please provide both bank account and secret key.");
+      return;
     }
-  }, [order_id]);
+
+    // Handle form submission (e.g., send data to the backend)
+    console.log("Form submitted:", { bankAccount, secretKey });
+  };
 
   return (
-    <div className="checkout-container">
-      <div className="icon">
-        <img src="icon.png" alt="Order Icon" />
+    <div>
+      <Header />
+      <div className="checkout-page">
+        <img src={blueIcon} alt="" className="blue_check" />
+        <div className="order-status">
+          <h2>
+            Your order is placed successfully. Please make payment to get the
+            product.
+          </h2>
+        </div>
+        <div className="verify-info-section">
+          <h2 className="verify-form-title">Bank Details</h2>
+          <form className="verify-info-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Bank Account Number"
+              className="verify-form-input"
+              value={bankAccount}
+              onChange={(e) => setBankAccount(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Secret Key"
+              className="verify-form-input"
+              value={secretKey}
+              onChange={(e) => setSecretKey(e.target.value)}
+              required
+            />
+            {errorMessage && (
+              <div className="error-message">{errorMessage}</div>
+            )}
+            <button type="submit" className="submit-button">
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
-      <div className="order-status">
-        <h2>
-          Your order is placed successfully. Please make payment to get the
-          product.
-        </h2>
-      </div>
-      <div className="form-container">
-        <h3>Bank Details</h3>
-        <form>
-          <label htmlFor="bankAccount">Bank Account</label>
-          <input type="text" id="bankAccount" name="bankAccount" required />
-
-          <label htmlFor="secretKey">Secret Key</label>
-          <input type="password" id="secretKey" name="secretKey" required />
-
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+      <Footer />
     </div>
   );
 };
 
-export default CheckoutPage;
+export default Checkout;
