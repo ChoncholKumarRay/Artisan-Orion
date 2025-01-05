@@ -6,10 +6,11 @@ import "./styles/CheckoutPage.css";
 import blueIcon from "../assets/blue_check.png";
 
 const Checkout = () => {
+  const { order_id } = useParams("id"); // Access the order ID from the URL
+  const [order, setOrder] = useState(null);
   const [bankAccount, setBankAccount] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const orderId = searchParams.get("id");
 
   const handleSubmit = (e) => {
     e.preventDefault();
