@@ -34,7 +34,7 @@ const BankInfoPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/"); // Navigate to profile page after successful update
+        navigate("/"); // Navigate to HomePage
       } else {
         setErrorMessage(data.message || "Failed to update bank information.");
       }

@@ -40,8 +40,7 @@ const Login = () => {
 
         navigate(data.redirectTo);
       } else {
-        // If login failed (wrong password or other issues)
-        setErrorMessage(data.message); // Set error message to display
+        setErrorMessage(data.message);
       }
     } catch (error) {
       console.error("Error during login:", error);

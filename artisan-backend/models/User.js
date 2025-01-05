@@ -11,12 +11,14 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   bank_account: {
-    type: String,
-    default: "",
+    type: Number, 
+    default: null,
   },
   secret_key: {
-    type: String,
-    default: "",
+    type: Number, 
+    default: null,
+    min: 10000,
+    max: 99999,
   },
 });
 
