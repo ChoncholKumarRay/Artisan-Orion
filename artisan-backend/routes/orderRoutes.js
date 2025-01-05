@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
       phone,
       address,
       ordered_products,
+      //TODO: I will get total price by getting price using product_id from database
       total_price: ordered_products.reduce(
         (total, product) => total + product.price * product.quantity,
         0

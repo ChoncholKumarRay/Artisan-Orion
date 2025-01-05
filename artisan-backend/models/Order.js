@@ -13,6 +13,7 @@ const orderSchema = new mongoose.Schema({
   ],
   supplier_id: { type: Number, default: 6030 },
   total_price: { type: Number },
+  is_verified: { type: Boolean, default: false },
   is_paid: { type: Boolean, default: false },
   status: {
     code: { type: Number },
