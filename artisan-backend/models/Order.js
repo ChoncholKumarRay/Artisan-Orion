@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   username: { type: String, required: true },
-  bank_account: { type: Number },
+  bank_account: { type: Number, default: null, },
   phone: { type: String, required: true },
   address: { type: String, required: true },
   ordered_products: [
@@ -17,6 +17,7 @@ const orderSchema = new mongoose.Schema({
   status: {
     code: { type: Number },
     message: { type: String },
+    date: { type: Date, default: Date.now },
   },
 });
 

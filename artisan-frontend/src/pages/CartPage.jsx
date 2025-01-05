@@ -82,8 +82,7 @@ const CartPage = () => {
       const data = await response.json();
       const id = data.order_id;
       if (response.ok) {
-        // Redirect to checkout page with order ID
-        // navigate(`/checkout/id?=${data.order_id}`);
+        localStorage.removeItem("cart");
         navigate(`/checkout?id=${id}`);
       } else {
         setError(data.message || "Something went wrong.");
