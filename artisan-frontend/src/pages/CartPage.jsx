@@ -177,7 +177,7 @@ const CartPage = () => {
               className="cart-page__checkout-button"
               onClick={handleCheckout}
             >
-              Checkout
+              Place Order
             </button>
           </div>
         </div>
