@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   username: { type: String, required: true },
-  bank_account: { type: Number, default: null, },
+  bank_account: { type: Number, default: null },
   phone: { type: String, required: true },
   address: { type: String, required: true },
   ordered_products: [
     {
-      product_id: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true }, // changed to ObjectId
+      product_id: { type: mongoose.Schema.Types.ObjectId, ref: 'products', required: true },
       quantity: { type: Number, required: true },
     },
   ],
@@ -15,11 +15,14 @@ const orderSchema = new mongoose.Schema({
   total_price: { type: Number },
   is_verified: { type: Boolean, default: false },
   is_paid: { type: Boolean, default: false },
-  status: {
-    code: { type: Number },
-    message: { type: String },
-    date: { type: Date, default: Date.now },
-  },
+  bank_transaction: { type: String, default: "" },
+  status: [
+    {
+      code: { type: Number, required: true },
+      message: { type: String, required: true },
+      date: { type: Date, default: Date.now },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Order", orderSchema);

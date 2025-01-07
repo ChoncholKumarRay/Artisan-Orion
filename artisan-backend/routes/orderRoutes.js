@@ -27,6 +27,7 @@ router.post("/", async (req, res) => {
         0
       ),
       is_paid: false,
+      bank_transaction: "",
       status: {
         code: 200,
         message: "Placed",
@@ -87,6 +88,13 @@ router.post("/payment", async (req, res) => {
     });
 
     const transaction_id = paymentRequest.data.transaction_id;
+    order.bank_transaction = transaction_id;
+    order.status.push({
+      code: 250,
+      message: "Pending Payment",
+    });
+    await order.save();
+
     // Respond with the transaction ID
     res.status(200).json({
       message: paymentRequest.data.message,
@@ -97,5 +105,32 @@ router.post("/payment", async (req, res) => {
     res.status(500).json({ message: "Error processing payment." });
   }
 });
+
+
+router.post("/check-status", async (req, res) => {
+  const { order_id, username } = req.body;
+
+  if (!order_id || !username) {
+    return res.status(400).json({ message: "Order ID and username are required." });
+  }
+
+  try {
+    const order = await Order.findById(order_id);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found." });
+    }
+    if (order.username !== username) {
+      return res.status(403).json({ message: "Unauthorized access." });
+    }
+    return res.status(200).json({ status: order.status });
+  } catch (error) {
+    console.error("Error fetching order status:", error);
+    return res.status(500).json({ message: "Error fetching order status." });
+  }
+});
+
+
+
 
 module.exports = router;
