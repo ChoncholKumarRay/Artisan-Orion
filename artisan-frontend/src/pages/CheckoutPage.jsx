@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import "./styles/CheckoutPage.css";
 import blueIcon from "../assets/blue_check.png";
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get("id");
   const username = localStorage.getItem("artisan"); // Get username from localStorage
@@ -83,10 +84,10 @@ const Checkout = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setTransactionId(data.transaction_id); // Set transaction ID if successful
+        setTransactionId(data.transaction_id);
         setBankMessage(data.message);
-        setIsPopupOpen(true);
-        navigate("/checkout");
+        console.log("payment successful");
+        navigate(`/order?id=${orderId}`);
       } else {
         setErrorMessage(
           data.message || "Bank Account verification failed. Please try again."
