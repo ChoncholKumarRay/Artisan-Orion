@@ -95,8 +95,8 @@ const Checkout = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              order_id: orderId,
-              transaction_id: transactionId,
+              orderId,
+              transactionId,
             }),
           }
         );

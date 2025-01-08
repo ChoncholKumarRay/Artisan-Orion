@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Route to handle payment
+// Route to handle payment of an order
 router.post("/payment", async (req, res) => {
   const { order_id, username, bank_account, secret_key } = req.body;
   const bankAccount = parseInt(bank_account, 10);
@@ -107,6 +107,92 @@ router.post("/payment", async (req, res) => {
 });
 
 
+// Give payment acknowlegdgement to the user
+router.post("/payment-acknowledge", async (req, res) => {
+  const { orderId, transactionId } = req.body;
+
+  console.log(req.body);
+
+  if (!orderId || !transactionId) {
+    return res.status(400).json({ message: "Order ID and Transaction ID are required." });
+  }
+
+  try {
+    // Verify order and transaction id
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: "Order not found." });
+    }
+
+    if (order.bank_transaction !== transactionId) {
+      return res.status(400).json({ message: "Bank transaction not matched." });
+    }
+
+    // Check transaction id from bank user api
+    const transactionCheckResponse = await fetch("http://localhost:5001/api/user/transaction-check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ transaction_id: transactionId }),
+    });
+
+    const transactionCheckData = await transactionCheckResponse.json();
+
+    if (!transactionCheckResponse.ok || transactionCheckData.success === false) {
+      return res.status(400).json({ message: "Bank transaction incomplete." });
+    }
+
+    // Calculate profit and supplier payable
+    const profit = order.total_price * 0.1; // 10% profit
+    const supplierPayable = order.total_price - profit;
+
+    // Step 4: Placeholder for additional functionality
+    // You can add new functionality here in the future
+
+    // Send money to the supplier
+    const moneySender = process.env.BANK_ACCOUNT;
+    const senderPin = process.env.PIN;
+    const moneyReceiver = process.env.COSMOBD_BANK_ACCOUNT; 
+    const amount = supplierPayable;
+
+    const sendMoneyResponse = await fetch("http://localhost:5001/api/user/send-money", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        money_sender: moneySender,
+        sender_pin: senderPin,
+        money_receiver: moneyReceiver,
+        amount,
+      }),
+    });
+
+    const sendMoneyData = await sendMoneyResponse.json();
+
+    if (!sendMoneyResponse.ok || sendMoneyData.success === false) {
+      return res.status(400).json({ message: "Error in sending money to the supplier. Contact with Artisan Orion admin" });
+    }
+
+    // Step 6: Update order status and mark as paid
+    order.is_paid = true;
+    order.status.push({ code: 350, message: "Payment Successful" });
+    await order.save();
+
+    return res.status(200).json({ message: "Payment successful and acknowledged." });
+  } catch (error) {
+    console.error("Error in payment acknowledgment:", error);
+    return res.status(500).json({ message: "Error processing payment acknowledgment." });
+  }
+});
+
+
+
+
+
+
+
 router.post("/check-status", async (req, res) => {
   const { order_id, username } = req.body;
 
@@ -129,8 +215,5 @@ router.post("/check-status", async (req, res) => {
     return res.status(500).json({ message: "Error fetching order status." });
   }
 });
-
-
-
 
 module.exports = router;
