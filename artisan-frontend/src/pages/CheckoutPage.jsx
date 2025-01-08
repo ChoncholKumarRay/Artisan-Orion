@@ -46,7 +46,7 @@ const Checkout = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setTransactionId(data.transaction_id); // Set transaction ID if successful
+        setTransactionId(data.transaction_id);
         setBankMessage(data.message);
       } else {
         setErrorMessage(data.message || "Payment failed. Please try again.");
@@ -66,6 +66,7 @@ const Checkout = () => {
     setErrorMessage("");
 
     try {
+      // First, verify the bank pin and complete the payment process
       const response = await fetch(
         "http://localhost:5001/api/user/response-pay-request",
         {
@@ -86,15 +87,36 @@ const Checkout = () => {
       if (response.ok) {
         setTransactionId(data.transaction_id);
         setBankMessage(data.message);
-        console.log("payment successful");
-        navigate(`/order?id=${orderId}`);
+        const acknowledgeResponse = await fetch(
+          "http://localhost:5000/api/order/payment-acknowledge",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              order_id: orderId,
+              transaction_id: transactionId,
+            }),
+          }
+        );
+
+        if (acknowledgeResponse.ok) {
+          navigate(`/order?id=${orderId}`);
+        } else {
+          const ackData = await acknowledgeResponse.json();
+          setErrorMessage(
+            ackData.message ||
+              "Payment acknowledgment failed. Please try again."
+          );
+        }
       } else {
         setErrorMessage(
           data.message || "Bank Account verification failed. Please try again."
         );
       }
     } catch (error) {
-      console.error("Error during bank payment:", error);
+      console.error("Error during payment or acknowledgment:", error);
       setErrorMessage("An error occurred. Please try again later.");
     }
   };

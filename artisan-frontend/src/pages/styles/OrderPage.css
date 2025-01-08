@@ -1,0 +1,78 @@
+/* Page container */
+.order-page {
+  font-family: "Arial", sans-serif;
+  padding: 2rem;
+  background: linear-gradient(135deg, #4ca1af, #2c3e50);
+  min-height: 100vh;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Page title */
+.order-page-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Timeline container */
+.timeline {
+  position: relative;
+  margin: 2rem 0;
+  padding: 0;
+  max-width: 600px;
+  width: 100%;
+  border-left: 4px solid rgba(255, 255, 255, 0.5);
+  padding-left: 1rem;
+}
+
+/* Timeline item */
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 2rem;
+}
+
+/* Timeline dot */
+.timeline-dot {
+  position: absolute;
+  left: -8px;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border: 3px solid #4ca1af;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Timeline content */
+.timeline-content {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Timeline time */
+.timeline-time {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Timeline message */
+.timeline-message {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
