@@ -124,7 +124,7 @@ router.post("/payment-acknowledge", async (req, res) => {
       return res.status(404).json({ message: "Order not found." });
     }
 
-    if (order.bank_transaction !== transactionId) {
+    if (order.bank_transaction !== transactionId || order.is_verified === false) {
       return res.status(400).json({ message: "Bank transaction not matched." });
     }
 
