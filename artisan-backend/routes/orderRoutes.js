@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const Order = require("../models/Order");
 const User = require("../models/User");
+const OrderSupply = require("../models/OrderSupply");
 const router = express.Router();
 
 const dotenv = require("dotenv");
@@ -148,9 +149,6 @@ router.post("/payment-acknowledge", async (req, res) => {
     const profit = order.total_price * 0.1; // 10% profit
     const supplierPayable = order.total_price - profit;
 
-    // Step 4: Placeholder for additional functionality
-    // You can add new functionality here in the future
-
     // Send money to the supplier
     const moneySender = process.env.BANK_ACCOUNT;
     const senderPin = process.env.PIN;
@@ -176,10 +174,35 @@ router.post("/payment-acknowledge", async (req, res) => {
       return res.status(400).json({ message: "Error in sending money to the supplier. Contact with Artisan Orion admin" });
     }
 
+
+
+    let supplierId = `SUP${Date.now()}`;
+
+    // Unique supplier ID
+    let existingSupplierId = await OrderSupply.findOne({ supplier_id:supplierId });
+    while (existingSupplierId) {
+    supplierId = `SUP${Date.now()}`;
+    existingSupplierId = await OrderSupply.findOne({ supplierId });
+    }
+   
+    const newOrderSupply = new OrderSupply({
+      order_id: orderId,
+      supply_id: supplierId,
+      user_transaction: transactionId,
+      supplier_transaction: sendMoneyData.transaction_id, 
+      profit: profit,
+    });
+
+    
+    
+
+
     // Step 6: Update order status and mark as paid
     order.is_paid = true;
     order.status.push({ code: 350, message: "Payment Successful" });
     await order.save();
+    await newOrderSupply.save();
+    console.log("OrderSupply document created successfully.");
 
     return res.status(200).json({ message: "Payment successful and acknowledged." });
   } catch (error) {
