@@ -11,6 +11,7 @@ dotenv.config();
 // Route to place a new order
 router.post("/", async (req, res) => {
   const { username, phone, address, ordered_products } = req.body;
+  // console.log(req.body);
 
   if (!username || !phone || !address || !ordered_products) {
     return res.status(400).json({ message: "All fields are required." });
@@ -42,7 +43,8 @@ router.post("/", async (req, res) => {
     console.error("Error placing order:", error);
     res.status(500).json({ message: "Error placing order." });
   }
-});
+  });
+
 
 // Route to handle payment of an order
 router.post("/payment", async (req, res) => {
@@ -104,14 +106,13 @@ router.post("/payment", async (req, res) => {
     console.error("Error processing payment:", error);
     res.status(500).json({ message: "Error processing payment." });
   }
-});
+  });
 
 
 // Give payment acknowlegdgement to the user
 router.post("/payment-acknowledge", async (req, res) => {
   const { orderId, transactionId } = req.body;
-
-  console.log(req.body);
+  // console.log(req.body);
 
   if (!orderId || !transactionId) {
     return res.status(400).json({ message: "Order ID and Transaction ID are required." });
@@ -185,14 +186,9 @@ router.post("/payment-acknowledge", async (req, res) => {
     console.error("Error in payment acknowledgment:", error);
     return res.status(500).json({ message: "Error processing payment acknowledgment." });
   }
-});
+  });
 
-
-
-
-
-
-
+// Sendng order status to the frontend
 router.post("/check-status", async (req, res) => {
   const { order_id, username } = req.body;
 
@@ -214,6 +210,6 @@ router.post("/check-status", async (req, res) => {
     console.error("Error fetching order status:", error);
     return res.status(500).json({ message: "Error fetching order status." });
   }
-});
+  });
 
 module.exports = router;

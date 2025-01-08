@@ -18,6 +18,7 @@ const Checkout = () => {
   const [bankMessage, setBankMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [senderPin, setSenderPin] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +65,7 @@ const Checkout = () => {
       return;
     }
     setErrorMessage("");
+    setIsProcessing(true);
 
     try {
       // First, verify the bank pin and complete the payment process
@@ -191,10 +193,17 @@ const Checkout = () => {
               />
               <button
                 type="button"
-                className="submit-button"
+                className={`submit-button ${
+                  isProcessing ? "disabled-button" : ""
+                }`}
                 onClick={handleConfirmPayment}
+                disabled={isProcessing}
               >
-                Confirm Payment
+                {isProcessing ? (
+                  <span className="loading-icon"></span>
+                ) : (
+                  "Confirm Payment"
+                )}
               </button>
             </form>
           </div>
