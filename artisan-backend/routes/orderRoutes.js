@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const Order = require("../models/Order");
 const User = require("../models/User");
+const Product = require("../models/Product");
 const OrderSupply = require("../models/OrderSupply");
 const router = express.Router();
 
@@ -193,7 +194,71 @@ router.post("/payment-acknowledge", async (req, res) => {
       profit: profit,
     });
 
-    
+
+
+    //TODO
+
+    // Replace the TODO section
+    const verificationCode = process.env.MY_VERIFICATION_CODE;
+
+if (!verificationCode) {
+  console.error("Verification code not found in environment variables.");
+  return res.status(500).json({ message: "Server configuration error: Verification code not found." });
+}
+
+try {
+  // Transform ordered_products to include correct product IDs
+  const transformedProducts = await Promise.all(
+    order.ordered_products.map(async (item) => {
+      const product = await Product.findById(item.product_id); // Fetch product from Product model
+      if (!product) {
+        throw new Error(`Product not found with ID: ${item.product_id}`);
+      }
+      return { product_id: product.product_id, quantity: item.quantity }; // Correct format for req-supply
+    })
+  );
+
+  // Call the /req-supply API
+  const reqBodyResponse = await fetch("http://localhost:5002/api/user/req-supply", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      verification_code: verificationCode,
+      supply_id: supplierId,
+      ordered_products: transformedProducts, // Use the transformed products
+      payment: supplierPayable,
+      bank_transaction: sendMoneyData.transaction_id,
+      buyer_name: order.username,
+      phone: order.phone,
+      address: order.address,
+    }),
+  });
+
+  const rawResponse = await reqBodyResponse.text(); // Get raw response
+  console.log("Raw response from /req-supply:", rawResponse);
+  console.log("HTTP Status from /req-supply:", reqBodyResponse.status);
+
+  if (!reqBodyResponse.ok) {
+    throw new Error(`HTTP Error ${reqBodyResponse.status}: ${rawResponse}`);
+  }
+
+  const reqBodyData = JSON.parse(rawResponse); // Parse JSON
+  if (!reqBodyData.success) {
+    return res.status(400).json({
+      message: reqBodyData.message || "Failed to process supply acknowledgment.",
+    });
+  }
+
+  console.log("Supply acknowledgment successful:", reqBodyData);
+} catch (error) {
+  console.error("Error in /req-supply call:", error.message);
+  return res.status(500).json({
+    message: "Error processing supply acknowledgment.",
+  });
+}
+
     
 
 
