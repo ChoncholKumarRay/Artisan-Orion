@@ -235,4 +235,51 @@ router.post("/check-status", async (req, res) => {
   }
   });
 
+//Get updated order status from the supplier and add it to the orders collection.
+router.post('/update-status', async (req, res) => {
+  try {
+      const { supply_id, code, status, verification_code } = req.body;
+      // console.log(req.body);
+  
+      if (!supply_id || !code || !status || !verification_code) {
+        return res.status(400).json({ message: 'Supply ID, code, status, and verification code are required.' });
+      }
+
+      if (verification_code !== process.env.COSMOBD_VERIFICATION_CODE) {
+        return res.status(403).json({ message: 'Invalid verification code.' });
+      }
+
+      const supply = await OrderSupply.findOne({ supply_id });
+      if (!supply) {
+        return res.status(404).json({ message: 'Supply order not found.' });
+      }
+
+      const orderId = supply.order_id;
+      // console.log(orderId);
+      if (!orderId) {
+        return res.status(500).json({ message: 'Order ID is missing in the supply record.' });
+      }
+  
+      const order = await Order.findById(orderId);
+      if (!order) {
+        return res.status(404).json({ message: 'Order not found.' });
+      }
+
+      const statusCode = parseInt(code, 10);
+  
+      // Push the new status into the order's status array
+      order.status.push({
+        code: statusCode,
+        message: `${status} by Supplier`, 
+      });
+
+      await order.save();
+      res.status(200).json({ message: 'Order status updated successfully.' });
+    } catch (error) {
+      console.error('Error in update-status:', error);
+      res.status(500).json({ message: 'Failed to update order status.' });
+    }
+});
+
+
 module.exports = router;
