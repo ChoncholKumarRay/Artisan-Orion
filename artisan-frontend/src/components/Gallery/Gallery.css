@@ -32,6 +32,26 @@
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4);
 }
 
+.card .placeholder-image {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  animation: shimmer 1.5s infinite;
+}
+
+/* .product-name,
+.product-price,
+.learn-more {
+  color: #ccc;
+} */
+
+.learn-more[disabled] {
+  cursor: not-allowed;
+  background-color: #e0e0e0;
+}
+
 /* Product image */
 .product-image {
   width: 100%;

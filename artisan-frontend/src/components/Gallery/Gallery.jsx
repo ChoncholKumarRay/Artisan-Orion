@@ -9,6 +9,7 @@ import telescope3 from "../../assets/telescope3.jpg";
 
 const Gallery = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const navigate = useNavigate(); // Hook for navigation
 
   const imageMapping = {
@@ -25,8 +26,10 @@ const Gallery = () => {
         );
         const data = await response.json();
         setProducts(data);
+        setLoading(false); // Set loading to false once products are fetched
       } catch (error) {
         console.error("Error fetching products:", error);
+        setLoading(false); // Set loading to false even on error
       }
     };
 
@@ -38,25 +41,37 @@ const Gallery = () => {
     navigate(`/products?id=${id}`);
   };
 
+  // Show placeholder cards if loading, else show actual products
   return (
     <div className="gallery">
-      {products.map((product) => (
-        <div key={product._id} className="card">
-          <img
-            src={imageMapping[product.image_url]}
-            alt={product.name}
-            className="product-image"
-          />
-          <h3 className="product-name">{product.name}</h3>
-          <p className="product-price">৳ {product.price}</p>
-          <button
-            className="learn-more"
-            onClick={() => handleLearnMore(product._id)}
-          >
-            Learn More
-          </button>
-        </div>
-      ))}
+      {loading
+        ? Array.from({ length: 3 }).map((_, index) => (
+            <div key={index} className="card">
+              <div className="placeholder-image"></div>
+              <h3 className="product-name">Loading...</h3>
+              <p className="product-price">৳ ---</p>
+              <button className="learn-more" disabled>
+                Loading...
+              </button>
+            </div>
+          ))
+        : products.map((product) => (
+            <div key={product._id} className="card">
+              <img
+                src={imageMapping[product.image_url]}
+                alt={product.name}
+                className="product-image"
+              />
+              <h3 className="product-name">{product.name}</h3>
+              <p className="product-price">৳ {product.price}</p>
+              <button
+                className="learn-more"
+                onClick={() => handleLearnMore(product._id)}
+              >
+                Learn More
+              </button>
+            </div>
+          ))}
     </div>
   );
 };
