@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     // New user
     const newUser = new User({
       username,
-      password, 
+      password,
     });
 
     await newUser.save();
@@ -46,9 +46,12 @@ router.post("/login", async (req, res) => {
     const { bank_account, secret_key } = user;
 
     if (bank_account === null || secret_key === null) {
-      return res.json({ message: "Login Successful", redirectTo: "/set-bank-info" }); // Redirect to set bank info
+      return res.json({
+        message: "Login Successful",
+        redirectTo: "/set-bank-info",
+      });
     } else {
-      return res.json({ message: "Login Successful", redirectTo: "/" }); 
+      return res.json({ message: "Login Successful", redirectTo: "/" });
     }
   } catch (error) {
     console.error("Error during login:", error);
@@ -56,22 +59,24 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
-
+// Route to update back info
 router.post("/update-bank-info", async (req, res) => {
   const { username, bank_account, secret_key } = req.body;
 
-  // PaseInt because bank_account and secret_key is in int32
   const bankAccount = parseInt(bank_account, 10);
   const secretKey = parseInt(secret_key, 10);
 
   try {
     if (isNaN(bankAccount) || isNaN(secretKey)) {
-      return res.status(400).json({ message: "Bank account and secret key must be valid numbers" });
+      return res
+        .status(400)
+        .json({ message: "Bank account and secret key must be valid numbers" });
     }
 
     if (secretKey < 10000 || secretKey > 99999) {
-      return res.status(400).json({ message: "Secret key must be a 5-digit number" });
+      return res
+        .status(400)
+        .json({ message: "Secret key must be a 5-digit number" });
     }
 
     const user = await User.findOne({ username });

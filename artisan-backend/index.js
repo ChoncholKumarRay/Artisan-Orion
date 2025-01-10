@@ -6,8 +6,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const productRoutes = require("./routes/productRoutes");
-const userRoutes = require("./routes/userRoutes"); // Import the user routes
-const orderRoutes = require("./routes/orderRoutes")
+const userRoutes = require("./routes/userRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 
@@ -19,9 +19,9 @@ console.log("Server Port:", process.env.PORT);
 // Configure CORS options
 app.use(
   cors({
-    origin: '*', // Allow requests from any domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    origin: "*", // Allow requests from any domain
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(express.json());
@@ -33,10 +33,9 @@ mongoose
   .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 // Routes
-app.use("/api", userRoutes); // Use user routes for registration and login
+app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/order", orderRoutes)
+app.use("/api/order", orderRoutes);
 
-// Start server
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
