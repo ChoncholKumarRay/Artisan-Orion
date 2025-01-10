@@ -21,7 +21,7 @@ const Gallery = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://artisan-orion.onrender.com/api/products"
+          "https://artisan.cam-sust.org/api/products/"
         );
         const data = await response.json();
         setProducts(data);

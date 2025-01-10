@@ -27,7 +27,7 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `https://artisan-orion.onrender.com/api/products/${productId}`
+          `https://artisan.cam-sust.org/api/products/${productId}`
         );
         const data = await response.json();
         setProduct(data);
