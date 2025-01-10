@@ -22,7 +22,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "https://artisan-orion.onrender.com/api/register",
+        "https://artisan.cam-sust.org/api/user/register",
         {
           method: "POST",
           headers: {

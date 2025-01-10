@@ -31,18 +31,21 @@ const Checkout = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/order/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          order_id: orderId,
-          username,
-          bank_account: bankAccount,
-          secret_key: secretKey,
-        }),
-      });
+      const response = await fetch(
+        "https://artisan.cam-sust.org/api/order/payment",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order_id: orderId,
+            username,
+            bank_account: bankAccount,
+            secret_key: secretKey,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -70,7 +73,7 @@ const Checkout = () => {
     try {
       // First, verify the bank pin and complete the payment process
       const response = await fetch(
-        "http://localhost:5001/api/user/response-pay-request",
+        "https://teesta.cam-sust.org/api/user/response-pay-request",
         {
           method: "POST",
           headers: {
@@ -90,7 +93,7 @@ const Checkout = () => {
         setTransactionId(data.transaction_id);
         setBankMessage(data.message);
         const acknowledgeResponse = await fetch(
-          "http://localhost:5000/api/order/payment-acknowledge",
+          "https://artisan.cam-sust.org/api/order/payment-acknowledge",
           {
             method: "POST",
             headers: {

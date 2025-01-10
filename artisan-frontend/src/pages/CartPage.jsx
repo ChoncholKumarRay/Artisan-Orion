@@ -71,16 +71,13 @@ const CartPage = () => {
 
     // Call API to create order
     try {
-      const response = await fetch(
-        "https://artisan-orion.onrender.com/api/order",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(orderData),
-        }
-      );
+      const response = await fetch("https://artisan.cam-sust.org/api/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
 
       const data = await response.json();
       const id = data.order_id;

@@ -17,7 +17,7 @@ const OrderPage = () => {
     const fetchOrderStatus = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/order/check-status",
+          "https://artisan.cam-sust.org/api/order/check-status",
           {
             order_id,
             username,
