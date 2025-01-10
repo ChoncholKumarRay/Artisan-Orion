@@ -15,11 +15,15 @@ console.log("MongoDB URL:", process.env.MONGO_URL);
 console.log("Server Port:", process.env.PORT);
 
 // Middleware
-app.use(cors({
-  origin: ["https://artisan-orion.vercel.app", "http://localhost:5173"], // Allow multiple origins
-  methods: "GET,POST", // Allow POST and GET requests
-  allowedHeaders: "Content-Type,Authorization", // Allow specific headers
-}));
+
+// Configure CORS options
+app.use(
+  cors({
+    origin: '*', // Allow requests from any domain
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+  })
+);
 app.use(express.json());
 
 // Connect to MongoDB
