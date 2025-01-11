@@ -56,7 +56,11 @@ const Gallery = () => {
             </div>
           ))
         : products.map((product) => (
-            <div key={product._id} className="card">
+            <div
+              key={product._id}
+              className="card"
+              onClick={() => handleLearnMore(product._id)}
+            >
               <img
                 src={imageMapping[product.image_url]}
                 alt={product.name}
