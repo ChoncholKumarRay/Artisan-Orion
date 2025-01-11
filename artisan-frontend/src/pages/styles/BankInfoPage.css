@@ -1,4 +1,3 @@
-/* Background setup */
 .bank-info-page {
   height: 450px;
   display: flex;
@@ -9,10 +8,9 @@
   font-family: "Arial", sans-serif;
 }
 
-/* Glassmorphic form styling */
 .bank-info-form {
-  background: rgba(30, 30, 30, 0.8); /* Darker glass effect */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7); /* Stronger shadow */
+  background: rgba(30, 30, 30, 0.8);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 15px;
@@ -22,16 +20,14 @@
   text-align: center;
 }
 
-/* Form title */
 .form-title {
   font-size: 1.8rem;
   font-weight: bold;
   padding-top: 2rem;
   margin-bottom: 1.5rem;
-  color: #ffffff; /* Bright text for contrast */
+  color: #ffffff;
 }
 
-/* Input fields */
 .bank-form-input {
   width: 92%;
   padding: 0.8rem;
@@ -40,17 +36,15 @@
   border-radius: 10px;
   font-size: 1rem;
   outline: none;
-  background: rgba(50, 50, 50, 0.8); /* Darker input background */
-  color: #ffffff; /* Bright text for readability */
+  background: rgba(50, 50, 50, 0.8);
+  color: #ffffff;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Input placeholder */
 .form-input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Submit button */
 .submit-button {
   width: 100%;
   padding: 0.8rem;
@@ -60,22 +54,42 @@
   font-size: 1rem;
   font-weight: bold;
   color: #ffffff;
-  background: linear-gradient(135deg, #4ca1af, #2c3e50); /* Sleek dark button */
+  background: linear-gradient(135deg, #4ca1af, #2c3e50);
   cursor: pointer;
   transition: 0.3s ease;
 }
 
 .submit-button:hover {
-  background: linear-gradient(
-    135deg,
-    #2c3e50,
-    #4ca1af
-  ); /* Reverse hover effect */
+  background: linear-gradient(135deg, #2c3e50, #4ca1af);
 }
 
-/* Error message */
 .error-message {
   color: red;
   font-size: 14px;
   margin-top: 10px;
+}
+
+.loading-icon {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-top-color: #4ca1af;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.disabled-button {
+  cursor: not-allowed;
+}
+
+.disabled-button:hover {
+  transform: none;
 }

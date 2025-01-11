@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/ProfilePage.css"; // Custom CSS for ProfilePage
+import "./styles/ProfilePage.css";
 import { FaUserCircle } from "react-icons/fa";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";

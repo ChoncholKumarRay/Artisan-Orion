@@ -8,12 +8,15 @@ const BankInfoPage = () => {
   const [bankAccount, setBankAccount] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const username = localStorage.getItem("artisan");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    setIsProcessing(true);
 
     try {
       const response = await fetch(
@@ -37,10 +40,12 @@ const BankInfoPage = () => {
         navigate("/"); // Navigate to HomePage
       } else {
         setErrorMessage(data.message || "Failed to update bank information.");
+        setIsProcessing(false);
       }
     } catch (error) {
       console.error("Error updating bank information:", error);
       setErrorMessage("An error occurred. Please try again.");
+      setIsProcessing(false);
     }
   };
 
@@ -67,8 +72,14 @@ const BankInfoPage = () => {
             required
           />
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button type="submit" className="submit-button">
-            Submit
+
+          <button
+            type="submit"
+            className={`submit-button ${isProcessing ? "disabled-button" : ""}`}
+            onClick={handleSubmit}
+            disabled={isProcessing}
+          >
+            {isProcessing ? <span className="loading-icon"></span> : "Submit"}
           </button>
         </form>
       </div>
