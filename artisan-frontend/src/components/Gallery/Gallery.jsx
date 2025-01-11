@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
+import { useNavigate } from "react-router-dom";
 import "./Gallery.css";
 
 // Import images locally
@@ -9,8 +9,8 @@ import telescope3 from "../../assets/telescope3.jpg";
 
 const Gallery = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
-  const navigate = useNavigate(); // Hook for navigation
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const imageMapping = {
     telescope1: telescope1,

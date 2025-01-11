@@ -11,9 +11,9 @@ const Header = () => {
   useEffect(() => {
     const artisan = localStorage.getItem("artisan");
     if (artisan) {
-      setIsLoggedIn(true); // If artisan is present, set logged-in state to true
+      setIsLoggedIn(true);
     } else {
-      setIsLoggedIn(false); // If artisan is not present, set logged-in state to false
+      setIsLoggedIn(false);
     }
   }, []);
 
@@ -47,7 +47,6 @@ const Header = () => {
           <NavLink to="/cart">Cart</NavLink>
         </li>
 
-        {/* Conditionally render Profile or Login link based on login state */}
         {isLoggedIn ? (
           <li onClick={handleMenuClick}>
             <NavLink to="/profile">Profile</NavLink>
