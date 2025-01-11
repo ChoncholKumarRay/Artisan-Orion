@@ -14,7 +14,7 @@ const Checkout = () => {
   const [bankAccount, setBankAccount] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [transactionId, setTransactionId] = useState(null); // Store transaction ID
+  const [transactionId, setTransactionId] = useState(null);
   const [bankMessage, setBankMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(true);
   const [senderPin, setSenderPin] = useState("");

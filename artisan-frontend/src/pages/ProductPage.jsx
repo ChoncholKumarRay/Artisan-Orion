@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom"; // Added useNavigate
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "./styles/ProductPage.css";
 import Header from "../components/Header/Header.jsx";
 import Footer from "../components/Footer/Footer.jsx";
@@ -12,10 +12,11 @@ import telescope3 from "../assets/telescope3.jpg";
 const ProductPage = () => {
   const [searchParams] = useSearchParams();
   const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1); // State for quantity
-  const navigate = useNavigate(); // Navigation hook
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
-  const productId = searchParams.get("id"); // Get the product ID from the URL
+  const productId = searchParams.get("id");
 
   const imageMapping = {
     telescope1: telescope1,
@@ -33,6 +34,8 @@ const ProductPage = () => {
         setProduct(data);
       } catch (error) {
         console.error("Error fetching product:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -47,19 +50,14 @@ const ProductPage = () => {
   const handleButtonClick = (buttonType) => {
     const artisan = localStorage.getItem("artisan");
     if (!artisan) {
-      navigate("/login"); // Redirect to login if artisan is not set
+      navigate("/login"); // Redirect to login if user not logged in
     } else {
-      // Retrieve cart from local storage, or initialize it if empty
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-      // Check if product is already in the cart
       const productIndex = cart.findIndex((item) => item.id === productId);
 
       if (productIndex > -1) {
-        // Product already in cart, update the quantity
         cart[productIndex].quantity = quantity;
       } else {
-        // Product not in cart, add it with quantity
         cart.push({
           id: productId,
           name: product.name,
@@ -69,23 +67,53 @@ const ProductPage = () => {
         });
       }
 
-      // Save the updated cart back to local storage
       localStorage.setItem("cart", JSON.stringify(cart));
 
-      // For now, you can handle the button logic here (e.g., for "Buy Now" or "Add to Cart")
-      // This can be further enhanced later for redirecting to the cart or checkout page
-      console.log("Cart updated:", cart);
-
-      if (buttonType == "add-to-cart") {
+      if (buttonType === "add-to-cart") {
         navigate("/");
-      } else if (buttonType == "buy-now") {
+      } else if (buttonType === "buy-now") {
         navigate("/cart");
       }
     }
   };
 
-  if (!product) {
-    return <p>Loading product details...</p>;
+  if (loading) {
+    return (
+      <div>
+        <Header />
+        <div className="product-page">
+          <div className="product-page__upper-section">
+            <div className="product-page__left product_placeholder">
+              <div className="product_placeholder-image"></div>
+            </div>
+            <div className="product-page__right">
+              <h1 className="product_placeholder-text">
+                Loading Product Name...
+              </h1>
+              <p className="product_placeholder-text">Brand: ---</p>
+              <p className="product_placeholder-text">৳ ---</p>
+              <div className="product-page__quantity-wrapper">
+                <p className="product_placeholder-text">Quantity: </p>
+                <div className="product_placeholder-quantity-control"></div>
+              </div>
+              <div className="product-page__action-buttons">
+                <button className="product_placeholder-button" disabled>
+                  Buy Now
+                </button>
+                <button className="product_placeholder-button" disabled>
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="product-page__lower-section">
+            <h2>Product Specification...</h2>
+            <p className="product_placeholder-text">Loading description...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -125,13 +153,13 @@ const ProductPage = () => {
             <div className="product-page__action-buttons">
               <button
                 className="product-page__buy-now-button"
-                onClick={() => handleButtonClick("buy-now")} // Add onClick for "Buy Now"
+                onClick={() => handleButtonClick("buy-now")}
               >
                 Buy Now
               </button>
               <button
                 className="product-page__add-to-cart-button"
-                onClick={() => handleButtonClick("add-to-cart")} // Add onClick for "Add to Cart"
+                onClick={() => handleButtonClick("add-to-cart")}
               >
                 Add to Cart
               </button>
