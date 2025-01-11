@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import "./styles/ProductPage.css";
 import Header from "../components/Header/Header.jsx";
 import Footer from "../components/Footer/Footer.jsx";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // Import images locally
 import telescope1 from "../assets/telescope1.jpg";
@@ -168,7 +170,11 @@ const ProductPage = () => {
         </div>
         <div className="product-page__lower-section">
           <h2>Product Specification</h2>
-          <p className="product-page__description">{product.description}</p>
+          <ReactMarkdown
+            className="product-page__description"
+            children={product.description}
+            remarkPlugins={[remarkGfm]} // Rendering markdown code
+          />
         </div>
       </div>
       <Footer />
