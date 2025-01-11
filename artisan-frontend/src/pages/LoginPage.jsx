@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/RegisterPage.css"; // You can reuse the same CSS
+import "./styles/RegisterPage.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
@@ -10,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,6 +20,8 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setErrorMessage("");
+    setIsProcessing(true);
 
     try {
       const response = await fetch(
@@ -36,15 +39,16 @@ const Login = () => {
 
       if (response.ok) {
         localStorage.setItem("artisan", username);
-        console.log(localStorage.getItem("artisan"));
-
+        // console.log(localStorage.getItem("artisan"))
         navigate(data.redirectTo);
       } else {
         setErrorMessage(data.message);
       }
+      setIsProcessing(false);
     } catch (error) {
       console.error("Error during login:", error);
       setErrorMessage("An error occurred. Please try again.");
+      setIsProcessing(false);
     }
   };
 
@@ -82,15 +86,23 @@ const Login = () => {
             </button>
           </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button type="submit" className="register-button">
-            Log In
+          <button
+            type="submit"
+            className={`register-button ${
+              isProcessing ? "disabled-button" : ""
+            }`}
+            onClick={handleLogin}
+            disabled={isProcessing}
+          >
+            {isProcessing ? <span className="loading-icon"></span> : "Login"}
           </button>
+
           <div className="register-link">
             <span>Don't have an account? </span>
             <button
               type="button"
               className="link-button"
-              onClick={() => navigate("/register")} // Navigate to register page
+              onClick={() => navigate("/register")}
             >
               Register
             </button>
