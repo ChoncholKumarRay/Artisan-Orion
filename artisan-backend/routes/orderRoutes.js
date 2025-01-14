@@ -38,6 +38,11 @@ router.post("/", async (req, res) => {
     });
 
     const newOrderId = await newOrder.save();
+    const user = await User.findOne({ username });
+
+    user.orders.push(newOrderId);
+    await user.save();
+
     res.status(201).json({
       order_id: newOrderId._id,
       message: "Order placed successfully.",
@@ -76,8 +81,10 @@ router.post("/payment", async (req, res) => {
         .json({ message: "Invalid bank account or secret key." });
     } else {
       order.is_verified = true;
+      order.bank_account = bankAccount;
       // console.log("veriried bank user");
       await order.save();
+      console.log(order.bank_account);
     }
 
     const money_receiver = parseInt(process.env.BANK_ACCOUNT, 10);

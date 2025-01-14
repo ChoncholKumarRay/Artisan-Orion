@@ -97,4 +97,32 @@ router.post("/update-bank-info", async (req, res) => {
   }
 });
 
+// API endpoint to get order history
+router.post("/order-history", async (req, res) => {
+  const { username } = req.body;
+
+  if (!username) {
+    return res.status(400).json({ message: "Username is required." });
+  }
+
+  try {
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    if (!user.orders || user.orders.length === 0) {
+      return res.status(200).json({ message: "No orders found so far!" });
+    }
+
+    res.status(200).json({
+      orders: user.orders,
+    });
+  } catch (error) {
+    console.error("Error fetching order history:", error);
+    res.status(500).json({ message: "Error fetching order history." });
+  }
+});
+
 module.exports = router;

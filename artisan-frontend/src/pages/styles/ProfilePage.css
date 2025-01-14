@@ -7,7 +7,9 @@
   background: linear-gradient(135deg, #2c3e50, #4ca1af);
   backdrop-filter: blur(10px);
   padding: 20px;
+  padding-bottom: 50px;
   font-family: "Arial", sans-serif;
+  color: white;
 }
 
 .profile-title {
@@ -29,6 +31,7 @@
   max-width: 400px;
   width: 100%;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  margin-bottom: 20px;
 }
 
 .profile-icon {
@@ -63,4 +66,67 @@
 
 .logout-button:active {
   transform: scale(0.98);
+}
+
+.order-info-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  padding-top: 0px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+}
+
+.order-history-title {
+  font-size: 1.5rem;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.order-item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.order-item-id {
+  margin: auto 0;
+}
+
+.track-button {
+  color: white;
+  background-color: #2460a0;
+  border: none;
+  height: 35px;
+  width: auto;
+  padding: 0 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 1.2;
+  display: inline-block;
+}
+
+.track-button:hover {
+  background-color: #053b75;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
 }

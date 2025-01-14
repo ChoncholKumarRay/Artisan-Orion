@@ -11,17 +11,23 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   bank_account: {
-    type: Number, 
+    type: Number,
     default: null,
   },
   secret_key: {
-    type: Number, 
+    type: Number,
     default: null,
     min: 10000,
     max: 99999,
   },
+  orders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "orders",
+    },
+  ],
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema, "users");
 
 module.exports = User;
