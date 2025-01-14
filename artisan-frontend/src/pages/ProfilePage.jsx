@@ -23,7 +23,7 @@ const ProfilePage = () => {
     const fetchOrderHistory = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/user/order-history",
+          "https://artisan.cam-sust.org/api/user/order-history",
           {
             method: "POST",
             headers: {
